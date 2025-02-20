@@ -4,12 +4,14 @@
   "description": "Practicing my ability to oauth as a beginner",
   "main": "index.js",
   "scripts": {
-   "start":"nodemon index.js"
+    "start": "nodemon index.js"
   },
   "author": "Nonye",
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.2",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "passport": "^0.7.0",
+    "passport-twitter": "^1.0.4"
   }
 }

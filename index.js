@@ -1,38 +1,25 @@
 const express = require('express');
 const passport = require('passport');
-const TwitterStrategy = require('passport-twitter').Strategy;
 const keys = require('./config/keys');
+const cookieSession = require('cookie-session');
+require('./model/Users');
+require('./services/passport');
+const mongoose = require('mongoose');
+
+mongoose.connect(keys.mongoURI);
 
 const app = express();
 
-// SETTING UP THE STRATEGY
-passport.use(
-  new TwitterStrategy(
-    {
-      consumerKey: keys.twitterConsumerAPIKey,
-      consumerSecret: keys.twitterConsumerAPISecret,
-      callbackURL: '/auth/x/callback',
-    },
-    (token, tokenSecret, profile) => {
-      console.log(profile);
-    }
-  )
-);
-app.get(
-  'auth/x',
-  passport.authenticate('twitter', {
-    scope: ['profile', 'email'],
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey],
   })
 );
 
-app.get('/auth/x/callback', passport.authenticate('twitter'));
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.get('/', (req, res) => {
-  res.send({
-    name: 'This is a test to practice',
-    stack: 'Node js with express',
-  });
-});
-
+require('./routes/authRoutes')(app);
 const PORT = 8000;
 app.listen(PORT, () => console.log('Listening on port 8000'));

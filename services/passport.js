@@ -23,6 +23,7 @@ passport.use(
       consumerKey: keys.consumerAPIKey,
       consumerSecret: keys.consumerAPISecret,
       callbackURL: '/auth/x/callback',
+      proxy: true,
     },
     (token, tokenSecret, profile, done) => {
       // Check if user already exists before creating a new record
@@ -39,7 +40,6 @@ passport.use(
             .then((user) => done(null, user));
         }
       });
-      
     }
   )
 );

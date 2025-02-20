@@ -9,8 +9,8 @@ const app = express();
 passport.use(
   new TwitterStrategy(
     {
-      consumerKey: process.env.twitterConsumerAPIKey,
-      consumerSecret: process.env.twitterConsumerAPISecret,
+      consumerKey: keys.twitterConsumerAPIKey,
+      consumerSecret: keys.twitterConsumerAPISecret,
       callbackURL: '/auth/x/callback',
     },
     (token, tokenSecret, profile) => {
